@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SoAn Tech — Soluciones digitales elegantes y eficientes</title>
+  <meta name="description" content="SoAn Tech: desarrollo web, automatizaciones, integraciones API y dashboards. Tecnología clara para personas técnicas y no técnicas." />
+  <meta name="theme-color" content="#0B1220" />
+  <meta property="og:title" content="SoAn Tech — Innovación práctica, resultados reales" />
+  <meta property="og:description" content="Sitios web, automatizaciones e integraciones API. Resultados rápidos, soporte humano." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://dummyimage.com/1200x630/0b1220/ffffff&text=SoAn+Tech" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232563EB'/%3E%3Cpath d='M32 58c0-14 10-26 24-26 6 0 12 2 16 6l-8 8c-2-2-5-3-8-3-8 0-14 7-14 15 0 9 7 16 16 16 6 0 11-3 14-8H54V56h26v26h-8v-7C68 82 62 86 54 86 41 86 32 74 32 58Z' fill='white'/%3E%3C/svg%3E" />
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'ui-sans-serif', 'sans-serif'],
+            display: ['Space Grotesk', 'Inter', 'ui-sans-serif', 'sans-serif']
+          },
+          colors: {
+            primary: { DEFAULT: '#2563EB', dark: '#1E40AF', light: '#60A5FA' },
+            ink: '#0B1220',
+            slate: '#0F172A',
+            accent: '#84CC16',
+            canvas: '#0B1220',
+            card: '#0f1221'
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(2,6,23,0.12)',
+            glow: '0 0 0 2px rgba(99,102,241,.25), 0 10px 30px rgba(2,6,23,0.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { --grid: radial-gradient(40rem 40rem at 10% 10%, rgba(37,99,235,0.08), transparent 60%),
+                     radial-gradient(32rem 32rem at 90% 20%, rgba(132,204,22,0.08), transparent 60%),
+                     radial-gradient(48rem 48rem at 60% 90%, rgba(99,102,241,0.10), transparent 60%); }
+    .bg-mesh { background-image: var(--grid); background-repeat:no-repeat; background-size:cover; }
+    .dark .bg-mesh { --grid: radial-gradient(40rem 40rem at 10% 10%, rgba(37,99,235,0.2), transparent 60%),
+                               radial-gradient(32rem 32rem at 90% 20%, rgba(132,204,22,0.18), transparent 60%),
+                               radial-gradient(48rem 48rem at 60% 90%, rgba(99,102,241,0.22), transparent 60%); }
+    .glass { backdrop-filter: blur(12px); background: rgba(255,255,255,.06); }
+    .dark .glass { background: rgba(15,23,42,.35); }
+    .fade-up { opacity:0; transform: translateY(16px); transition: all .7s cubic-bezier(.2,.65,.2,1); }
+    .fade-up.show { opacity:1; transform: translateY(0); }
+    .ring-neo { box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 0 0 1px rgba(37,99,235,.15); }
+    @keyframes shimmer { 0%{ background-position: 0% 50%; } 100%{ background-position: 200% 50%; } }
+    .btn-neo { background: linear-gradient(90deg, #2563EB, #60A5FA, #2563EB); background-size: 200% 100%; animation: shimmer 4s linear infinite; }
+  </style>
+  <script>
+    // Theme: load preference
+    (function(){
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (stored === 'dark' || (!stored && prefersDark)) document.documentElement.classList.add('dark');
+    })();
+    // Reveal on scroll
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); })
+      }, { threshold: .15 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    });
+  </script>
+</head>
+<body class="bg-white text-slate-800 antialiased dark:bg-slate text-slate-200 selection:bg-primary/20 selection:text-white">
+  <!-- ===== Sticky Header ===== -->
+  <header class="fixed inset-x-0 top-0 z-50">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mt-4 rounded-2xl border border-white/10 bg-white/70 shadow-soft glass dark:border-white/5 dark:bg-white/5">
+        <div class="flex items-center justify-between px-4 py-3">
+          <a href="#home" class="flex items-center gap-3">
+            <span class="inline-grid h-9 w-9 place-items-center rounded-xl bg-primary text-white shadow-soft">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 15a7 7 0 1 1 14 0v0" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 15h10v6H9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="text-lg font-semibold text-ink dark:text-white font-display tracking-tight">SoAn <span class="text-primary">Tech</span></span>
+          </a>
+          <nav class="hidden items-center gap-8 text-sm md:flex">
+            <a href="#servicios" class="hover:text-primary">Servicios</a>
+            <a href="#proceso" class="hover:text-primary">Proceso</a>
+            <a href="#proyectos" class="hover:text-primary">Proyectos</a>
+            <a href="#precios" class="hover:text-primary">Planes</a>
+            <a href="#contacto" class="hover:text-primary">Contacto</a>
+          </nav>
+          <div class="flex items-center gap-2">
+            <button id="themeToggle" class="rounded-xl border border-white/20 p-2 text-sm hover:border-primary/50" aria-label="Cambiar tema">
+              <span class="block dark:hidden" aria-hidden="true">
+                <!-- moon -->
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </span>
+              <span class="hidden dark:block" aria-hidden="true">
+                <!-- sun -->
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.536 6.364-1.414-1.414M7.05 7.05 5.636 5.636m12.728 0-1.414 1.414M7.05 16.95l-1.414 1.414"/></svg>
+              </span>
+            </button>
+            <a href="#contacto" class="hidden rounded-xl bg-primary px-4 py-2 text-white shadow-glow hover:bg-primary-dark md:inline-block">Cotiza ahora</a>
+            <button id="menuBtn" class="md:hidden rounded-xl border border-white/10 p-2" aria-label="Abrir menú">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </div>
+        </div>
+        <div id="mobileMenu" class="hidden border-t border-white/10 px-4 py-3 md:hidden">
+          <a href="#servicios" class="block py-2">Servicios</a>
+          <a href="#proceso" class="block py-2">Proceso</a>
+          <a href="#proyectos" class="block py-2">Proyectos</a>
+          <a href="#precios" class="block py-2">Planes</a>
+          <a href="#contacto" class="block py-2">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <script>
+    // Mobile + theme toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      const b = document.getElementById('menuBtn');
+      const m = document.getElementById('mobileMenu');
+      b?.addEventListener('click', () => m.classList.toggle('hidden'));
+      const t = document.getElementById('themeToggle');
+      t?.addEventListener('click', () => {
+        const d = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', d ? 'dark' : 'light');
+      });
+    });
+  </script>
+
+  <!-- ===== Hero ===== -->
+  <section id="home" class="relative overflow-hidden pt-36">
+    <!-- Animated mesh background -->
+    <div aria-hidden class="pointer-events-none absolute inset-0 -z-10 bg-mesh"></div>
+    <div class="pointer-events-none absolute inset-0 -z-10 opacity-60 blur-3xl dark:opacity-80" style="background: radial-gradient(60rem 40rem at 10% 10%, rgba(37,99,235,.12), transparent 60%), radial-gradient(60rem 40rem at 80% 0%, rgba(99,102,241,.10), transparent 60%);"></div>
+
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
+      <div class="fade-up">
+        <span class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/60 px-3 py-1 text-xs font-medium text-primary backdrop-blur dark:bg-white/10 dark:text-white">
+          <span class="h-2 w-2 rounded-full bg-accent shadow-glow"></span> Disponible para nuevos proyectos
+        </span>
+        <h1 class="mt-2 font-display text-4xl font-bold leading-tight text-ink dark:text-white md:text-6xl">
+          Tecnología clara. <span class="text-primary">Resultados reales.</span>
+        </h1>
+        <p class="mt-4 max-w-xl text-slate-600 dark:text-slate-300">Construimos sitios, integraciones y automatizaciones que se entienden y funcionan. Para equipos técnicos y no técnicos, con procesos simples y soporte humano.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#contacto" class="btn-neo rounded-xl px-5 py-3 text-white shadow-glow">Solicitar cotización</a>
+          <a href="#proyectos" class="rounded-xl border border-white/20 px-5 py-3 text-ink hover:border-primary hover:text-primary dark:text-white">Ver proyectos</a>
+        </div>
+        <div class="mt-8 flex items-center gap-6 text-sm text-slate-500 dark:text-slate-300">
+          <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-500"></span> Entregas ágiles</div>
+          <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-blue-500"></span> Soporte dedicado</div>
+        </div>
+      </div>
+
+      <!-- Terminal card -->
+      <div class="fade-up">
+        <div class="relative rounded-2xl border border-white/10 bg-white/80 p-5 shadow-soft ring-neo backdrop-blur dark:bg-card/70">
+          <div class="rounded-xl bg-ink/90 p-4 text-white dark:bg-black/60">
+            <div class="flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-red-400"></span>
+              <span class="h-3 w-3 rounded-full bg-yellow-400"></span>
+              <span class="h-3 w-3 rounded-full bg-green-400"></span>
+            </div>
+            <div class="mt-4 rounded-lg bg-white/5 p-4">
+              <pre class="font-mono text-xs leading-relaxed text-white/90">$ npx soan new my-project
+✓ UI moderna (Tailwind + Motion)
+✓ Integraciones API seguras
+✓ Autenticación JWT
+✓ Dashboards en tiempo real</pre>
+            </div>
+            <div class="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
+              <div class="rounded-lg bg-white/5 p-3">Web</div>
+              <div class="rounded-lg bg-white/5 p-3">APIs</div>
+              <div class="rounded-lg bg-white/5 p-3">Automation</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Logos / trust ===== -->
+  <section class="py-14">
+    <div class="mx-auto max-w-7xl px-6">
+      <p class="mb-6 text-center text-xs uppercase tracking-[.2em] text-slate-500 dark:text-slate-400">Confían en nosotros</p>
+      <div class="grid grid-cols-2 items-center gap-6 opacity-80 md:grid-cols-5">
+        <div class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">StartUp</div>
+        <div class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">Retail</div>
+        <div class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">Logística</div>
+        <div class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">Servicios</div>
+        <div class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">Fintech</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Servicios ===== -->
+  <section id="servicios" class="py-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="fade-up mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl">Soluciones para impulsar tu negocio</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-300">Hablamos simple y construimos en serio: web, automatización, integraciones y analítica.</p>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <!-- Card -->
+        <article class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h18v12H3z"/><path d="M7 20h10"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Desarrollo Web</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Landing, corporativos y tiendas con foco en conversión.</p>
+        </article>
+        <article class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Dashboards & Data</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Métricas en tiempo real para decidir mejor.</p>
+        </article>
+        <article class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9"/><path d="M14 17H5"/><path d="M5 7l4-4"/><path d="M15 21l4-4"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Integraciones API</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Conectamos pagos, CRM, ERP y mensajería.</p>
+        </article>
+        <article class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+          <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6h4v12h-4z"/><path d="M6 10h12"/></svg>
+          </div>
+          <h3 class="text-lg font-semibold">Automatización</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Elimina tareas repetitivas con flujos inteligentes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Proceso ===== -->
+  <section id="proceso" class="bg-white py-20 dark:bg-transparent">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="fade-up mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl">Proceso simple, entregas rápidas</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-300">Transparente, iterativo y orientado a valor desde el día uno.</p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-4">
+        <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+          <p class="text-sm text-slate-500 dark:text-slate-400">01</p>
+          <h3 class="mt-2 font-semibold">Diagnóstico</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Objetivos, limitaciones y métricas de éxito.</p>
+        </div>
+        <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+          <p class="text-sm text-slate-500 dark:text-slate-400">02</p>
+          <h3 class="mt-2 font-semibold">Propuesta</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Alcance claro, tiempos y costos sin letra chica.</p>
+        </div>
+        <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+          <p class="text-sm text-slate-500 dark:text-slate-400">03</p>
+          <h3 class="mt-2 font-semibold">Desarrollo ágil</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Sprints semanales, demos y feedback.</p>
+        </div>
+        <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+          <p class="text-sm text-slate-500 dark:text-slate-400">04</p>
+          <h3 class="mt-2 font-semibold">Entrega & Soporte</h3>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Despliegue, documentación y acompañamiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Proyectos ===== -->
+  <section id="proyectos" class="py-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="fade-up mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl">Proyectos recientes</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-300">Una muestra de entregas reales. Más detalles bajo solicitud.</p>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <!-- Project card -->
+        <article class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
+          <div class="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20"></div>
+          <div class="p-6">
+            <h3 class="font-semibold">Plataforma de reservas</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">-40% tiempo operativo. Autogestión y reportes.</p>
+          </div>
+        </article>
+        <article class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
+          <div class="relative h-48 bg-gradient-to-br from-primary/20 to-ink/10"></div>
+          <div class="p-6">
+            <h3 class="font-semibold">Integración CRM + WhatsApp</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Seguimiento automático y analytics de ventas.</p>
+          </div>
+        </article>
+        <article class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
+          <div class="relative h-48 bg-gradient-to-br from-ink/10 to-accent/20"></div>
+          <div class="p-6">
+            <h3 class="font-semibold">E‑commerce a medida</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Checkout optimizado y panel de gestión simple.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Planes ===== -->
+  <section id="precios" class="bg-white py-20 dark:bg-transparent">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="fade-up mx-auto max-w-2xl text-center">
+        <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl">Planes flexibles</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-300">Precios orientativos. Ajustamos según alcance y tiempos.</p>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <!-- Plan Básico -->
+        <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+          <h3 class="text-lg font-semibold">Básico</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Landing 1 sección • 1 semana</p>
+          <p class="mt-4 text-3xl font-extrabold text-ink dark:text-white">$ CLP</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>Diseño moderno</li>
+            <li>Optimización móvil</li>
+            <li>Formulario de contacto</li>
+          </ul>
+          <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white">Quiero este</a>
+        </div>
+        <!-- Plan Pro -->
+        <div class="fade-up rounded-2xl border border-primary/20 bg-white/80 p-6 shadow-soft ring-1 ring-primary/10 backdrop-blur dark:bg-card/70">
+          <span class="inline-block rounded-full bg-primary/10 px-2 py-1 text-xs text-primary">Recomendado</span>
+          <h3 class="mt-2 text-lg font-semibold">Pro</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Sitio 4–6 secciones • 2–3 semanas</p>
+          <p class="mt-4 text-3xl font-extrabold text-ink dark:text-white">$$ CLP</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>Animaciones y SEO base</li>
+            <li>Integración Analytics</li>
+            <li>Soporte 30 días</li>
+          </ul>
+          <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white">Quiero este</a>
+        </div>
+        <!-- Plan A Medida -->
+        <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+          <h3 class="text-lg font-semibold">A medida</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Web + APIs/Automation</p>
+          <p class="mt-4 text-3xl font-extrabold text-ink dark:text-white">Custom</p>
+          <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li>Alcance flexible</li>
+            <li>Integraciones</li>
+            <li>Soporte extendido</li>
+          </ul>
+          <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white">Cotizar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="py-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="fade-up grid items-center gap-8 rounded-3xl bg-gradient-to-br from-primary to-primary-dark p-10 text-white shadow-soft md:grid-cols-2">
+        <div>
+          <h3 class="text-2xl font-bold">¿Listo para dar el salto digital?</h3>
+          <p class="mt-2 text-white/90">Agenda una llamada de 15 minutos. En 24h tendrás una propuesta clara.</p>
+        </div>
+        <div class="flex flex-wrap gap-3 md:justify-end">
+          <a href="#contacto" class="rounded-xl bg-white px-5 py-3 text-ink hover:bg-white/90">Agendar</a>
+          <a href="https://wa.me/56900000000?text=Hola%20SoAn%20Tech,%20quiero%20cotizar%20un%20proyecto" class="rounded-xl border border-white/30 px-5 py-3 text-white hover:bg-white/10">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contacto ===== -->
+  <section id="contacto" class="bg-white py-20 dark:bg-transparent">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="fade-up mx-auto max-w-xl text-center">
+        <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl">Hablemos de tu proyecto</h2>
+        <p class="mt-3 text-slate-600 dark:text-slate-300">Cuéntanos qué necesitas. Respondemos dentro del mismo día hábil.</p>
+      </div>
+      <div class="mt-10 grid gap-8 md:grid-cols-2">
+        <form class="fade-up space-y-4 rounded-2xl border border-white/10 bg-white/80 p-6 shadow-soft backdrop-blur dark:bg-card/70" name="contacto" onsubmit="return handleSubmit(event)">
+          <div class="grid gap-4 md:grid-cols-2">
+            <div>
+              <label class="text-sm text-slate-600 dark:text-slate-300">Nombre</label>
+              <input required type="text" class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" />
+            </div>
+            <div>
+              <label class="text-sm text-slate-600 dark:text-slate-300">Email</label>
+              <input required type="email" class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" />
+            </div>
+          </div>
+          <div>
+            <label class="text-sm text-slate-600 dark:text-slate-300">Empresa (opcional)</label>
+            <input type="text" class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" />
+          </div>
+          <div>
+            <label class="text-sm text-slate-600 dark:text-slate-300">Mensaje</label>
+            <textarea required rows="5" class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" placeholder="Cuéntanos brevemente tu idea"></textarea>
+          </div>
+          <div class="flex items-center justify-between">
+            <label class="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><input type="checkbox" required class="h-4 w-4 rounded border-slate-300"/> Acepto el uso de mis datos para contacto.</label>
+            <button class="rounded-xl bg-primary px-5 py-2 text-white hover:bg-primary-dark" type="submit">Enviar</button>
+          </div>
+          <p id="formStatus" class="hidden text-sm"></p>
+        </form>
+        <div class="fade-up space-y-6">
+          <div class="rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+            <h3 class="font-semibold">Contacto directo</h3>
+            <p class="mt-2 text-slate-600 dark:text-slate-300">Correo: <a class="text-primary hover:underline" href="mailto:contacto@soantech.cl">contacto@soantech.cl</a></p>
+            <p class="mt-1 text-slate-600 dark:text-slate-300">WhatsApp: <a class="text-primary hover:underline" href="https://wa.me/56900000000">+56 9 0000 0000</a></p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+            <h3 class="font-semibold">¿Por qué elegirnos?</h3>
+            <ul class="mt-2 list-disc space-y-1 pl-5 text-slate-600 dark:text-slate-300">
+              <li>Transparencia y foco en valor</li>
+              <li>Iteraciones rápidas con demo</li>
+              <li>Soporte cercano post‑entrega</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="border-t border-white/10 bg-white/60 py-10 backdrop-blur dark:bg-transparent">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+        <p class="text-sm text-slate-600 dark:text-slate-400">© <span id="year"></span> SoAn Tech. Todos los derechos reservados.</p>
+        <nav class="flex gap-6 text-sm">
+          <a href="#home" class="hover:text-primary">Inicio</a>
+          <a href="#servicios" class="hover:text-primary">Servicios</a>
+          <a href="#proyectos" class="hover:text-primary">Proyectos</a>
+          <a href="#contacto" class="hover:text-primary">Contacto</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Formulario sin backend: mailto
+    function handleSubmit(e){
+      e.preventDefault();
+      const [nombre,email,empresa,mensaje] = Array.from(e.target.querySelectorAll('input, textarea')).map(i=>i.value);
+      const mailto = `mailto:contacto@soantech.cl?subject=Consulta%20de%20${encodeURIComponent(nombre)}&body=${encodeURIComponent(`Correo: ${email}\nEmpresa: ${empresa}\n\nMensaje:\n${mensaje}`)}`;
+      window.location.href = mailto;
+      const s = document.getElementById('formStatus');
+      s.classList.remove('hidden');
+      s.textContent = 'Gracias, abrimos tu correo para completar el envío. Pronto te contactaremos.';
+      return false;
+    }
+  </script>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SoAn Tech",
+    "url": "https://soantech.cl",
+    "logo": "https://dummyimage.com/300x300/2563eb/ffffff&text=SoAn",
+    "sameAs": [
+      "https://www.linkedin.com/company/soantech",
+      "https://www.instagram.com/soantech.cl"
+    ],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "contacto@soantech.cl",
+      "areaServed": "CL",
+      "availableLanguage": ["es"]
+    }]
+  }
+  </script>
+</body>
+</html>

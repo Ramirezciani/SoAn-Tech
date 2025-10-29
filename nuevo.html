@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SoAn Tech — Soluciones digitales elegantes y eficientes</title>
+    <meta name="description"
+        content="SoAn Tech: desarrollo web, automatizaciones, integraciones API y dashboards. Tecnología clara para personas técnicas y no técnicas." />
+    <meta name="theme-color" content="#0B1220" />
+    <meta property="og:title" content="SoAn Tech — Innovación práctica, resultados reales" />
+    <meta property="og:description"
+        content="Sitios web, automatizaciones e integraciones API. Resultados rápidos, soporte humano." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://dummyimage.com/1200x630/0b1220/ffffff&text=SoAn+Tech" />
+
+    <!-- Fonts: Regular Nova (via Nova Square as placeholder), Space Grotesk, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Space+Grotesk:wght@400;600;700&family=Nova+Square:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- If you obtain a proper "Regular Nova" font file, replace Nova Square above with your @font-face. -->
+
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%232563EB'/%3E%3Cpath d='M32 58c0-14 10-26 24-26 6 0 12 2 16 6l-8 8c-2-2-5-3-8-3-8 0-14 7-14 15 0 9 7 16 16 16 6 0 11-3 14-8H54V56h26v26h-8v-7C68 82 62 86 54 86 41 86 32 74 32 58Z' fill='white'/%3E%3C/svg%3E" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'ui-sans-serif', 'sans-serif'],
+                        display: ['"Nova Square"', '"Regular Nova"', 'Space Grotesk', 'Inter', 'ui-sans-serif', 'sans-serif'],
+                        alt: ['Space Grotesk', 'Inter', 'ui-sans-serif', 'sans-serif']
+                    },
+                    colors: {
+                        primary: { DEFAULT: '#2563EB', dark: '#1E40AF', light: '#60A5FA' },
+                        ink: '#0B1220',
+                        slate: '#0F172A',
+                        accent: '#84CC16',
+                        canvas: '#0B1220',
+                        card: '#0f1221'
+                    },
+                    boxShadow: {
+                        soft: '0 10px 30px rgba(2,6,23,0.12)',
+                        glow: '0 0 0 2px rgba(99,102,241,.25), 0 10px 30px rgba(2,6,23,0.25)'
+                    },
+                    spacing: {
+                        mini: '0.625rem' /* 10px */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --grid: radial-gradient(40rem 40rem at 10% 10%, rgba(37, 99, 235, 0.08), transparent 60%),
+                radial-gradient(32rem 32rem at 90% 20%, rgba(132, 204, 22, 0.08), transparent 60%),
+                radial-gradient(48rem 48rem at 60% 90%, rgba(99, 102, 241, 0.10), transparent 60%);
+        }
+
+        .bg-mesh {
+            background-image: var(--grid);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .dark .bg-mesh {
+            --grid: radial-gradient(40rem 40rem at 10% 10%, rgba(37, 99, 235, 0.2), transparent 60%),
+                radial-gradient(32rem 32rem at 90% 20%, rgba(132, 204, 22, 0.18), transparent 60%),
+                radial-gradient(48rem 48rem at 60% 90%, rgba(99, 102, 241, 0.22), transparent 60%);
+        }
+
+        .glass {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, .06);
+        }
+
+        .dark .glass {
+            background: rgba(15, 23, 42, .35);
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all .7s cubic-bezier(.2, .65, .2, 1);
+        }
+
+        .fade-up.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .ring-neo {
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), 0 0 0 1px rgba(37, 99, 235, .15);
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .btn-neo {
+            background: linear-gradient(90deg, #2563EB, #60A5FA, #2563EB);
+            background-size: 200% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            background: #0b1220;
+            z-index: 9999;
+        }
+
+        .loader-logo {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            color: #fff;
+        }
+
+        .loader-logo svg {
+            filter: drop-shadow(0 0 16px rgba(96, 165, 250, .35));
+        }
+
+        .blink {
+            animation: blink 1.3s steps(2, start) infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: .35;
+            }
+        }
+    </style>
+    <script>
+            // Theme: load preference
+            (function () {
+                const stored = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (stored === 'dark' || (!stored && prefersDark)) document.documentElement.classList.add('dark');
+            })();
+
+        // i18n strings
+        const I18N = {
+            es: {
+                nav_services: 'Servicios', nav_process: 'Proceso', nav_projects: 'Proyectos', nav_pricing: 'Planes', nav_contact: 'Contacto',
+                hero_badge: 'Disponible para nuevos proyectos',
+                hero_title_1: 'Tecnología clara.', hero_title_2: 'Resultados reales.',
+                hero_sub: 'Construimos sitios, integraciones y automatizaciones que se entienden y funcionan. Para equipos técnicos y no técnicos, con procesos simples y soporte humano.',
+                cta_quote: 'Solicitar cotización', cta_view: 'Ver proyectos',
+                trust_title: 'Confían en nosotros',
+                services_title: 'Soluciones para impulsar tu negocio', services_sub: 'Hablamos simple y construimos en serio: web, automatización, integraciones y analítica.',
+                s1_title: 'Desarrollo Web', s1_desc: 'Landing, corporativos y tiendas con foco en conversión.',
+                s2_title: 'Dashboards & Data', s2_desc: 'Métricas en tiempo real para decidir mejor.',
+                s3_title: 'Integraciones API', s3_desc: 'Conectamos pagos, CRM, ERP y mensajería.',
+                s4_title: 'Automatización', s4_desc: 'Elimina tareas repetitivas con flujos inteligentes.',
+                process_title: 'Proceso simple, entregas rápidas', process_sub: 'Transparente, iterativo y orientado a valor desde el día uno.',
+                p1: 'Diagnóstico', p1d: 'Objetivos, limitaciones y métricas de éxito.',
+                p2: 'Propuesta', p2d: 'Alcance claro, tiempos y costos sin letra chica.',
+                p3: 'Desarrollo ágil', p3d: 'Sprints semanales, demos y feedback.',
+                p4: 'Entrega & Soporte', p4d: 'Despliegue, documentación y acompañamiento.',
+                proj_title: 'Proyectos recientes', proj_sub: 'Una muestra de entregas reales. Más detalles bajo solicitud.',
+                pr1: 'Plataforma de reservas', pr1d: '-40% tiempo operativo. Autogestión y reportes.',
+                pr2: 'Integración CRM + WhatsApp', pr2d: 'Seguimiento automático y analytics de ventas.',
+                pr3: 'E‑commerce a medida', pr3d: 'Checkout optimizado y panel de gestión simple.',
+                pricing_title: 'Planes flexibles', pricing_sub: 'Precios orientativos. Ajustamos según alcance y tiempos.',
+                pl1: 'Básico', pl1d: 'Landing 1 sección • 1 semana', pl1btn: 'Quiero este',
+                pl2: 'Pro', pl2d: 'Sitio 4–6 secciones • 2–3 semanas', pl2tag: 'Recomendado', pl2btn: 'Quiero este',
+                pl3: 'A medida', pl3d: 'Web + APIs/Automation', pl3btn: 'Cotizar',
+                cta_block_title: '¿Listo para dar el salto digital?', cta_block_sub: 'Agenda una llamada de 15 minutos. En 24h tendrás una propuesta clara.', cta_block_btn: 'Agendar',
+                contact_title: 'Hablemos de tu proyecto', contact_sub: 'Cuéntanos qué necesitas. Respondemos dentro del mismo día hábil.',
+                f_name: 'Nombre', f_email: 'Email', f_company: 'Empresa (opcional)', f_message: 'Mensaje', f_consent: 'Acepto el uso de mis datos para contacto.', f_send: 'Enviar',
+                why_title: '¿Por qué elegirnos?', why_1: 'Transparencia y foco en valor', why_2: 'Iteraciones rápidas con demo', why_3: 'Soporte cercano post‑entrega',
+                footer_nav_home: 'Inicio', footer_nav_services: 'Servicios', footer_nav_projects: 'Proyectos', footer_nav_contact: 'Contacto'
+            },
+            en: {
+                nav_services: 'Services', nav_process: 'Process', nav_projects: 'Projects', nav_pricing: 'Pricing', nav_contact: 'Contact',
+                hero_badge: 'Open for new projects',
+                hero_title_1: 'Clear technology.', hero_title_2: 'Real results.',
+                hero_sub: 'We build websites, integrations and automations that make sense and work. For technical and non‑technical teams, with simple processes and human support.',
+                cta_quote: 'Request a quote', cta_view: 'See projects',
+                trust_title: 'Trusted by',
+                services_title: 'Solutions to boost your business', services_sub: 'Plain talk, serious delivery: web, automation, integrations and analytics.',
+                s1_title: 'Web Development', s1_desc: 'Landings, corporate sites and stores focused on conversion.',
+                s2_title: 'Dashboards & Data', s2_desc: 'Real‑time metrics for better decisions.',
+                s3_title: 'API Integrations', s3_desc: 'We connect payments, CRM, ERP and messaging.',
+                s4_title: 'Automation', s4_desc: 'Eliminate repetitive tasks with smart flows.',
+                process_title: 'Simple process, fast delivery', process_sub: 'Transparent, iterative and value‑oriented from day one.',
+                p1: 'Diagnosis', p1d: 'Goals, constraints and success metrics.',
+                p2: 'Proposal', p2d: 'Clear scope, timeline and costs — no fine print.',
+                p3: 'Agile development', p3d: 'Weekly sprints, demos and feedback.',
+                p4: 'Delivery & Support', p4d: 'Deployment, docs and guidance.',
+                proj_title: 'Recent projects', proj_sub: 'A sample of real deliveries. More details on request.',
+                pr1: 'Booking platform', pr1d: '-40% operational time. Self‑service and reports.',
+                pr2: 'CRM + WhatsApp integration', pr2d: 'Automated follow‑ups and sales analytics.',
+                pr3: 'Custom e‑commerce', pr3d: 'Optimized checkout and simple admin panel.',
+                pricing_title: 'Flexible plans', pricing_sub: 'Reference pricing. We adapt to scope and timelines.',
+                pl1: 'Basic', pl1d: '1‑section landing • 1 week', pl1btn: 'Choose this',
+                pl2: 'Pro', pl2d: '4–6 section site • 2–3 weeks', pl2tag: 'Recommended', pl2btn: 'Choose this',
+                pl3: 'Custom', pl3d: 'Web + APIs/Automation', pl3btn: 'Get a quote',
+                cta_block_title: 'Ready to go digital?', cta_block_sub: 'Book a 15‑minute call. Get a clear proposal within 24h.', cta_block_btn: 'Book now',
+                contact_title: 'Let’s talk about your project', contact_sub: 'Tell us what you need. We reply within the same business day.',
+                f_name: 'Name', f_email: 'Email', f_company: 'Company (optional)', f_message: 'Message', f_consent: 'I agree to be contacted.', f_send: 'Send',
+                why_title: 'Why choose us?', why_1: 'Transparency and value focus', why_2: 'Fast iterations with demos', why_3: 'Close post‑delivery support',
+                footer_nav_home: 'Home', footer_nav_services: 'Services', footer_nav_projects: 'Projects', footer_nav_contact: 'Contact'
+            }
+        };
+
+        function applyLang(lang) {
+            const dict = I18N[lang] || I18N.es;
+            document.documentElement.setAttribute('lang', lang);
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.textContent = dict[key];
+            });
+            localStorage.setItem('lang', lang);
+        }
+    </script>
+</head>
+
+<body
+    class="bg-white text-slate-800 antialiased dark:bg-slate text-slate-200 selection:bg-primary/20 selection:text-white font-sans">
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-logo font-display text-xl">
+            <span class="inline-grid h-10 w-10 place-items-center rounded-xl bg-primary text-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 15a7 7 0 1 1 14 0v0" stroke="white" stroke-width="2" stroke-linecap="round" />
+                    <path d="M9 15h10v6H9" stroke="white" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </span>
+            <span>SoAn Tech<span class="blink">_</span></span>
+        </div>
+    </div>
+
+    <!-- ===== Sticky Header ===== -->
+    <header class="fixed inset-x-0 top-0 z-50">
+        <div class="mx-auto max-w-7xl px-6">
+            <div
+                class="mt-mini rounded-2xl border border-white/10 bg-white/70 shadow-soft glass dark:border-white/5 dark:bg-white/5">
+                <div class="flex items-center justify-between px-4 py-3">
+                    <a href="#home" class="flex items-center gap-3">
+                        <span
+                            class="inline-grid h-9 w-9 place-items-center rounded-xl bg-primary text-white shadow-soft">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5 15a7 7 0 1 1 14 0v0" stroke="white" stroke-width="2"
+                                    stroke-linecap="round" />
+                                <path d="M9 15h10v6H9" stroke="white" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </span>
+                        <span class="text-lg font-semibold text-ink dark:text-white font-display tracking-tight">SoAn
+                            <span class="text-primary">Tech</span></span>
+                    </a>
+                    <nav class="hidden items-center gap-6 text-sm md:flex">
+                        <a href="#servicios" class="hover:text-primary" data-i18n="nav_services">Servicios</a>
+                        <a href="#proceso" class="hover:text-primary" data-i18n="nav_process">Proceso</a>
+                        <a href="#proyectos" class="hover:text-primary" data-i18n="nav_projects">Proyectos</a>
+                        <a href="#precios" class="hover:text-primary" data-i18n="nav_pricing">Planes</a>
+                        <a href="#contacto" class="hover:text-primary" data-i18n="nav_contact">Contacto</a>
+                    </nav>
+                    <div class="flex items-center gap-2">
+                        <!-- Language toggle -->
+                        <div class="relative">
+                            <button id="langToggle"
+                                class="rounded-xl border border-white/20 px-3 py-2 text-sm hover:border-primary/50"
+                                aria-label="Cambiar idioma">ES / EN</button>
+                            <div id="langMenu"
+                                class="absolute right-0 z-40 mt-2 hidden w-28 rounded-xl border border-white/10 bg-white/90 p-1 text-sm shadow-soft backdrop-blur dark:bg-card/80">
+                                <button data-lang="es"
+                                    class="block w-full rounded-lg px-3 py-2 text-left hover:bg-white/50 dark:hover:bg-white/10">ES
+                                    — Español</button>
+                                <button data-lang="en"
+                                    class="block w-full rounded-lg px-3 py-2 text-left hover:bg-white/50 dark:hover:bg-white/10">EN
+                                    — English</button>
+                            </div>
+                        </div>
+                        <!-- Theme toggle -->
+                        <button id="themeToggle"
+                            class="rounded-xl border border-white/20 p-2 text-sm hover:border-primary/50"
+                            aria-label="Cambiar tema">
+                            <span class="block dark:hidden" aria-hidden="true">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                                </svg>
+                            </span>
+                            <span class="hidden dark:block" aria-hidden="true">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="4" />
+                                    <path
+                                        d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.536 6.364-1.414-1.414M7.05 7.05 5.636 5.636m12.728 0-1.414 1.414M7.05 16.95l-1.414 1.414" />
+                                </svg>
+                            </span>
+                        </button>
+                        <a href="#contacto"
+                            class="hidden rounded-xl bg-primary px-4 py-2 text-white shadow-glow hover:bg-primary-dark md:inline-block"
+                            data-i18n="cta_quote">Solicitar cotización</a>
+                        <button id="menuBtn" class="md:hidden rounded-xl border border-white/10 p-2"
+                            aria-label="Abrir menú">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="mobileMenu" class="hidden border-t border-white/10 px-4 py-3 md:hidden">
+                    <a href="#servicios" class="block py-2" data-i18n="nav_services">Servicios</a>
+                    <a href="#proceso" class="block py-2" data-i18n="nav_process">Proceso</a>
+                    <a href="#proyectos" class="block py-2" data-i18n="nav_projects">Proyectos</a>
+                    <a href="#precios" class="block py-2" data-i18n="nav_pricing">Planes</a>
+                    <a href="#contacto" class="block py-2" data-i18n="nav_contact">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        // Loader + Mobile + theme + language toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            // Loader
+            setTimeout(() => { document.getElementById('loader')?.classList.add('hidden'); }, 450);
+
+            // Mobile menu
+            const b = document.getElementById('menuBtn');
+            const m = document.getElementById('mobileMenu');
+            b?.addEventListener('click', () => m.classList.toggle('hidden'));
+
+            // Theme
+            const t = document.getElementById('themeToggle');
+            t?.addEventListener('click', () => {
+                const d = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', d ? 'dark' : 'light');
+            });
+
+            // Language
+            const langBtn = document.getElementById('langToggle');
+            const langMenu = document.getElementById('langMenu');
+            langBtn?.addEventListener('click', () => langMenu.classList.toggle('hidden'));
+            langMenu?.querySelectorAll('[data-lang]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const l = btn.getAttribute('data-lang');
+                    applyLang(l); langMenu.classList.add('hidden');
+                })
+            });
+            const savedLang = localStorage.getItem('lang') || 'es';
+            applyLang(savedLang);
+        });
+    </script>
+
+    <!-- ===== Hero ===== -->
+    <section id="home" class="relative overflow-hidden pt-36">
+        <div aria-hidden class="pointer-events-none absolute inset-0 -z-10 bg-mesh"></div>
+        <div class="pointer-events-none absolute inset-0 -z-10 opacity-60 blur-3xl dark:opacity-80"
+            style="background: radial-gradient(60rem 40rem at 10% 10%, rgba(37,99,235,.12), transparent 60%), radial-gradient(60rem 40rem at 80% 0%, rgba(99,102,241,.10), transparent 60%);">
+        </div>
+
+        <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 md:grid-cols-2">
+            <div class="fade-up">
+                <span
+                    class="mb-mini inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/60 px-3 py-1 text-xs font-medium text-primary backdrop-blur dark:bg-white/10 dark:text-white"
+                    data-i18n="hero_badge">
+                    Disponible para nuevos proyectos
+                </span>
+                <h1 class="mt-2 font-display text-4xl font-bold leading-tight text-ink dark:text-white md:text-6xl">
+                    <span data-i18n="hero_title_1">Tecnología clara.</span> <span class="text-primary"
+                        data-i18n="hero_title_2">Resultados reales.</span>
+                </h1>
+                <p class="mt-3 max-w-xl text-slate-600 dark:text-slate-300" data-i18n="hero_sub">Construimos sitios,
+                    integraciones y automatizaciones que se entienden y funcionan. Para equipos técnicos y no técnicos,
+                    con procesos simples y soporte humano.</p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <a href="#contacto" class="btn-neo rounded-xl px-5 py-3 text-white shadow-glow"
+                        data-i18n="cta_quote">Solicitar cotización</a>
+                    <a href="#proyectos"
+                        class="rounded-xl border border-white/20 px-5 py-3 text-ink hover:border-primary hover:text-primary dark:text-white"
+                        data-i18n="cta_view">Ver proyectos</a>
+                </div>
+                <div class="mt-6 flex items-center gap-6 text-sm text-slate-500 dark:text-slate-300">
+                    <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                        Entregas ágiles</div>
+                    <div class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-blue-500"></span> Soporte
+                        dedicado</div>
+                </div>
+            </div>
+
+            <!-- Terminal card -->
+            <div class="fade-up">
+                <div
+                    class="relative rounded-2xl border border-white/10 bg-white/80 p-5 shadow-soft ring-neo backdrop-blur dark:bg-card/70">
+                    <div class="rounded-xl bg-ink/90 p-4 text-white dark:bg-black/60">
+                        <div class="flex items-center gap-2">
+                            <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                            <span class="h-3 w-3 rounded-full bg-yellow-400"></span>
+                            <span class="h-3 w-3 rounded-full bg-green-400"></span>
+                        </div>
+                        <div class="mt-4 rounded-lg bg-white/5 p-4">
+                            <pre class="font-mono text-xs leading-relaxed text-white/90">$ npx soan new my-project
+✓ UI moderna (Tailwind + Motion)
+✓ Integraciones API seguras
+✓ Autenticación JWT
+✓ Dashboards en tiempo real</pre>
+                        </div>
+                        <div class="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
+                            <div class="rounded-lg bg-white/5 p-3">Web</div>
+                            <div class="rounded-lg bg-white/5 p-3">APIs</div>
+                            <div class="rounded-lg bg-white/5 p-3">Automation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Logos / trust ===== -->
+    <section class="py-14">
+        <div class="mx-auto max-w-7xl px-6">
+            <p class="mb-6 text-center text-xs uppercase tracking-[.2em] text-slate-500 dark:text-slate-400"
+                data-i18n="trust_title">Confían en nosotros</p>
+            <div class="grid grid-cols-2 items-center gap-4 opacity-80 md:grid-cols-5">
+                <div
+                    class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">
+                    StartUp</div>
+                <div
+                    class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">
+                    Retail</div>
+                <div
+                    class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">
+                    Logística</div>
+                <div
+                    class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">
+                    Servicios</div>
+                <div
+                    class="rounded-xl border border-white/10 bg-white/60 p-4 text-center backdrop-blur dark:bg-white/5">
+                    Fintech</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Servicios ===== -->
+    <section id="servicios" class="py-16">
+        <div class="mx-auto max-w-7xl px-6">
+            <div class="fade-up mx-auto max-w-2xl text-center">
+                <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl"
+                    data-i18n="services_title">Soluciones para impulsar tu negocio</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-300" data-i18n="services_sub">Hablamos simple y
+                    construimos en serio: web, automatización, integraciones y analítica.</p>
+            </div>
+            <div class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+                <article
+                    class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+                    <div
+                        class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 4h18v12H3z" />
+                            <path d="M7 20h10" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-lg font-semibold" data-i18n="s1_title">Desarrollo Web</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="s1_desc">Landing, corporativos
+                        y tiendas con foco en conversión.</p>
+                </article>
+                <article
+                    class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+                    <div
+                        class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20V10" />
+                            <path d="M18 20V4" />
+                            <path d="M6 20v-4" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-lg font-semibold" data-i18n="s2_title">Dashboards & Data</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="s2_desc">Métricas en tiempo
+                        real para decidir mejor.</p>
+                </article>
+                <article
+                    class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+                    <div
+                        class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 7h-9" />
+                            <path d="M14 17H5" />
+                            <path d="M5 7l4-4" />
+                            <path d="M15 21l4-4" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-lg font-semibold" data-i18n="s3_title">Integraciones API</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="s3_desc">Conectamos pagos,
+                        CRM, ERP y mensajería.</p>
+                </article>
+                <article
+                    class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 shadow-soft ring-neo backdrop-blur hover:shadow-glow dark:bg-card/60">
+                    <div
+                        class="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 6h4v12h-4z" />
+                            <path d="M6 10h12" />
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-lg font-semibold" data-i18n="s4_title">Automatización</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="s4_desc">Elimina tareas
+                        repetitivas con flujos inteligentes.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Proceso ===== -->
+    <section id="proceso" class="bg-white py-16 dark:bg-transparent">
+        <div class="mx-auto max-w-7xl px-6">
+            <div class="fade-up mx-auto max-w-2xl text-center">
+                <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl"
+                    data-i18n="process_title">Proceso simple, entregas rápidas</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-300" data-i18n="process_sub">Transparente, iterativo y
+                    orientado a valor desde el día uno.</p>
+            </div>
+            <div class="mt-10 grid gap-5 md:grid-cols-4">
+                <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">01</p>
+                    <h3 class="mt-1 font-display font-semibold" data-i18n="p1">Diagnóstico</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="p1d">Objetivos, limitaciones y
+                        métricas de éxito.</p>
+                </div>
+                <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">02</p>
+                    <h3 class="mt-1 font-display font-semibold" data-i18n="p2">Propuesta</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="p2d">Alcance claro, tiempos y
+                        costos sin letra chica.</p>
+                </div>
+                <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">03</p>
+                    <h3 class="mt-1 font-display font-semibold" data-i18n="p3">Desarrollo ágil</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="p3d">Sprints semanales, demos
+                        y feedback.</p>
+                </div>
+                <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                    <p class="text-sm text-slate-500 dark:text-slate-400">04</p>
+                    <h3 class="mt-1 font-display font-semibold" data-i18n="p4">Entrega & Soporte</h3>
+                    <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="p4d">Despliegue, documentación
+                        y acompañamiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Proyectos ===== -->
+    <section id="proyectos" class="py-16">
+        <div class="mx-auto max-w-7xl px-6">
+            <div class="fade-up mx-auto max-w-2xl text-center">
+                <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl" data-i18n="proj_title">
+                    Proyectos recientes</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-300" data-i18n="proj_sub">Una muestra de entregas reales.
+                    Más detalles bajo solicitud.</p>
+            </div>
+            <div class="mt-8 grid gap-5 md:grid-cols-3">
+                <article
+                    class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
+                    <div class="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20"></div>
+                    <div class="p-6">
+                        <h3 class="font-display font-semibold" data-i18n="pr1">Plataforma de reservas</h3>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="pr1d">-40% tiempo
+                            operativo. Autogestión y reportes.</p>
+                    </div>
+                </article>
+                <article
+                    class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
+                    <div class="relative h-48 bg-gradient-to-br from-primary/20 to-ink/10"></div>
+                    <div class="p-6">
+                        <h3 class="font-display font-semibold" data-i18n="pr2">Integración CRM + WhatsApp</h3>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="pr2d">Seguimiento
+                            automático y analytics de ventas.</p>
+                    </div>
+                </article>
+                <article
+                    class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
+                    <div class="relative h-48 bg-gradient-to-br from-ink/10 to-accent/20"></div>
+                    <div class="p-6">
+                        <h3 class="font-display font-semibold" data-i18n="pr3">E‑commerce a medida</h3>
+                        <p class="mt-1 text-sm text-slate-600 dark:text-slate-300" data-i18n="pr3d">Checkout optimizado
+                            y panel de gestión simple.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Planes ===== -->
+    <section id="precios" class="bg-white py-16 dark:bg-transparent">
+        <div class="mx-auto max-w-7xl px-6">
+            <div class="fade-up mx-auto max-w-2xl text-center">
+                <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl"
+                    data-i18n="pricing_title">Planes flexibles</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-300" data-i18n="pricing_sub">Precios orientativos.
+                    Ajustamos según alcance y tiempos.</p>
+            </div>
+            <div class="mt-8 grid gap-5 md:grid-cols-3">
+                <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                    <h3 class="font-display text-lg font-semibold" data-i18n="pl1">Básico</h3>
+                    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400" data-i18n="pl1d">Landing 1 sección • 1
+                        semana</p>
+                    <p class="mt-3 text-3xl font-extrabold text-ink dark:text-white">$ CLP</p>
+                    <ul class="mt-3 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                        <li>Diseño moderno</li>
+                        <li>Optimización móvil</li>
+                        <li>Formulario de contacto</li>
+                    </ul>
+                    <a href="#contacto" class="mt-4 inline-block rounded-xl bg-primary px-4 py-2 text-white"
+                        data-i18n="pl1btn">Quiero este</a>
+                </div>
+                <div
+                    class="fade-up rounded-2xl border border-primary/20 bg-white/80 p-6 shadow-soft ring-1 ring-primary/10 backdrop-blur dark:bg-card/70">
+                    <span class="inline-block rounded-full bg-primary/10 px-2 py-1 text-xs text-primary"
+                        data-i18n="pl2tag">Recomendado</span>
+                    <h3 class="mt-2 font-display text-lg font-semibold" data-i18n="pl2">Pro</h3>
+                    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400" data-i18n="pl2d">Sitio 4–6 secciones •
+                        2–3 semanas</p>
+                    <p class="mt-3 text-3xl font-extrabold text-ink dark:text-white">$$ CLP</p>
+                    <ul class="mt-3 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                        <li>Animaciones y SEO base</li>
+                        <li>Integración Analytics</li>
+                        <li>Soporte 30 días</li>
+                    </ul>
+                    <a href="#contacto" class="mt-4 inline-block rounded-xl bg-primary px-4 py-2 text-white"
+                        data-i18n="pl2btn">Quiero este</a>
+                </div>
+                <div class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                    <h3 class="font-display text-lg font-semibold" data-i18n="pl3">A medida</h3>
+                    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400" data-i18n="pl3d">Web + APIs/Automation
+                    </p>
+                    <p class="mt-3 text-3xl font-extrabold text-ink dark:text-white">Custom</p>
+                    <ul class="mt-3 space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                        <li>Alcance flexible</li>
+                        <li>Integraciones</li>
+                        <li>Soporte extendido</li>
+                    </ul>
+                    <a href="#contacto" class="mt-4 inline-block rounded-xl bg-primary px-4 py-2 text-white"
+                        data-i18n="pl3btn">Cotizar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="py-16">
+        <div class="mx-auto max-w-7xl px-6">
+            <div
+                class="fade-up grid items-center gap-6 rounded-3xl bg-gradient-to-br from-primary to-primary-dark p-8 text-white shadow-soft md:grid-cols-2">
+                <div>
+                    <h3 class="font-display text-2xl font-bold" data-i18n="cta_block_title">¿Listo para dar el salto
+                        digital?</h3>
+                    <p class="mt-1 text-white/90" data-i18n="cta_block_sub">Agenda una llamada de 15 minutos. En 24h
+                        tendrás una propuesta clara.</p>
+                </div>
+                <div class="flex flex-wrap gap-3 md:justify-end">
+                    <a href="#contacto" class="rounded-xl bg-white px-5 py-3 text-ink hover:bg-white/90"
+                        data-i18n="cta_block_btn">Agendar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Contacto ===== -->
+    <section id="contacto" class="bg-white py-16 dark:bg-transparent">
+        <div class="mx-auto max-w-7xl px-6">
+            <div class="fade-up mx-auto max-w-xl text-center">
+                <h2 class="font-display text-3xl font-bold text-ink dark:text-white md:text-4xl"
+                    data-i18n="contact_title">Hablemos de tu proyecto</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-300" data-i18n="contact_sub">Cuéntanos qué necesitas.
+                    Respondemos dentro del mismo día hábil.</p>
+            </div>
+            <div class="mt-8 grid gap-6 md:grid-cols-2">
+                <form
+                    class="fade-up space-y-4 rounded-2xl border border-white/10 bg-white/80 p-6 shadow-soft backdrop-blur dark:bg-card/70"
+                    name="contacto" onsubmit="return handleSubmit(event)">
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <div>
+                            <label class="text-sm text-slate-600 dark:text-slate-300" data-i18n="f_name">Nombre</label>
+                            <input required type="text"
+                                class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" />
+                        </div>
+                        <div>
+                            <label class="text-sm text-slate-600 dark:text-slate-300" data-i18n="f_email">Email</label>
+                            <input required type="email"
+                                class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm text-slate-600 dark:text-slate-300" data-i18n="f_company">Empresa
+                            (opcional)</label>
+                        <input type="text"
+                            class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60" />
+                    </div>
+                    <div>
+                        <label class="text-sm text-slate-600 dark:text-slate-300" data-i18n="f_message">Mensaje</label>
+                        <textarea required rows="5"
+                            class="mt-1 w-full rounded-xl border border-white/20 bg-white/80 px-4 py-2 outline-none focus:border-primary dark:bg-card/60"
+                            placeholder="Cuéntanos brevemente tu idea"></textarea>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><input
+                                type="checkbox" required class="h-4 w-4 rounded border-slate-300" /> <span
+                                data-i18n="f_consent">Acepto el uso de mis datos para contacto.</span></label>
+                        <button class="rounded-xl bg-primary px-5 py-2 text-white hover:bg-primary-dark" type="submit"
+                            data-i18n="f_send">Enviar</button>
+                    </div>
+                    <p id="formStatus" class="hidden text-sm"></p>
+                </form>
+                <div class="fade-up space-y-6">
+                    <div class="rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                        <h3 class="font-display font-semibold" data-i18n="why_title">¿Por qué elegirnos?</h3>
+                        <ul class="mt-2 list-disc space-y-1 pl-5 text-slate-600 dark:text-slate-300">
+                            <li data-i18n="why_1">Transparencia y foco en valor</li>
+                            <li data-i18n="why_2">Iteraciones rápidas con demo</li>
+                            <li data-i18n="why_3">Soporte cercano post‑entrega</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer class="border-t border-white/10 bg-white/60 py-10 backdrop-blur dark:bg-transparent">
+        <div class="mx-auto max-w-7xl px-6">
+            <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+                <p class="text-sm text-slate-600 dark:text-slate-400">© <span id="year"></span> SoAn Tech. Todos los
+                    derechos reservados.</p>
+                <nav class="flex gap-6 text-sm">
+                    <a href="#home" class="hover:text-primary" data-i18n="footer_nav_home">Inicio</a>
+                    <a href="#servicios" class="hover:text-primary" data-i18n="footer_nav_services">Servicios</a>
+                    <a href="#proyectos" class="hover:text-primary" data-i18n="footer_nav_projects">Proyectos</a>
+                    <a href="#contacto" class="hover:text-primary" data-i18n="footer_nav_contact">Contacto</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Año dinámico
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Formulario sin backend: mailto
+        function handleSubmit(e) {
+            e.preventDefault();
+            const [nombre, email, empresa, mensaje] = Array.from(e.target.querySelectorAll('input, textarea')).map(i => i.value);
+            const subject = (localStorage.getItem('lang') || 'es') === 'en' ? 'Project inquiry' : 'Consulta de proyecto';
+            const mailto = `mailto:contacto@soantech.cl?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Nombre: ${nombre}\nCorreo: ${email}\nEmpresa: ${empresa}\n\nMensaje:\n${mensaje}`)}`;
+            window.location.href = mailto;
+            const s = document.getElementById('formStatus');
+            s.classList.remove('hidden');
+            s.textContent = (localStorage.getItem('lang') || 'es') === 'en' ? 'Thanks! We opened your email client to complete the send.' : 'Gracias, abrimos tu correo para completar el envío. Pronto te contactaremos.';
+            return false;
+        }
+    </script>
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SoAn Tech",
+    "url": "https://soantech.cl",
+    "logo": "https://dummyimage.com/300x300/2563eb/ffffff&text=SoAn",
+    "sameAs": [],
+    "contactPoint": [{
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "contacto@soantech.cl",
+      "areaServed": "CL",
+      "availableLanguage": ["es","en"]
+    }]
+  }
+  </script>
+</body>
+
+</html>
