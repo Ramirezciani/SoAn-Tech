@@ -476,7 +476,11 @@
                     <!-- CARD 1 -->
                     <article
                         class="fade-up group overflow-hidden rounded-2xl border border-white/10 bg-white/70 shadow-soft backdrop-blur transition hover:shadow-glow dark:bg-card/60">
-                        <div class="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20"></div>
+
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="./img/01.jpg" alt="Plataformas Web" class="h-full w-full object-cover" />
+                        </div>
+
                         <div class="p-6">
                             <h3 class="font-semibold">Plataformas Web a Medida</h3>
                             <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
@@ -556,7 +560,7 @@
                     <p class="mt-3 text-slate-600 dark:text-slate-300" data-i18n="pricing.subtitle">Precios
                         orientativos. Ajustamos según alcance y tiempos.</p>
                 </div>
-                <div class="mt-10 grid gap-6 md:grid-cols-3">
+                <!-- <div class="mt-10 grid gap-6 md:grid-cols-3">
                     <div
                         class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
                         <h3 class="text-lg font-semibold" data-i18n="pricing.basic.title">Básico</h3>
@@ -601,8 +605,76 @@
                         <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white"
                             data-i18n="pricing.custom.cta">Cotizar</a>
                     </div>
+                </div> -->
+                <div class="mt-10 grid gap-6 md:grid-cols-3">
+
+                    <!-- Card 1 — Desarrollo de Software -->
+                    <div
+                        class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                        <h3 class="text-lg font-semibold" data-i18n="services.dev.title">Desarrollo de software</h3>
+                        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400" data-i18n="services.dev.meta">
+                            Sistemas web, móviles y plataformas a medida.
+                        </p>
+                        <p class="mt-4 text-3xl font-extrabold text-ink dark:text-white" data-i18n="services.dev.tag">
+                            Servicios
+                        </p>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                            <li data-i18n="services.dev.i1">Aplicaciones web y móviles</li>
+                            <li data-i18n="services.dev.i2">Plataformas empresariales</li>
+                            <li data-i18n="services.dev.i3">Desarrollo a medida</li>
+                        </ul>
+                        <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white"
+                            data-i18n="services.dev.cta">Cotizar</a>
+                    </div>
+
+                    <!-- Card 2 — Consultoría & Gestión Tecnológica -->
+                    <div
+                        class="fade-up rounded-2xl border border-primary/20 bg-white/80 p-6 shadow-soft ring-1 ring-primary/10 backdrop-blur dark:bg-card/70">
+                        <span class="inline-block rounded-full bg-primary/10 px-2 py-1 text-xs text-primary"
+                            data-i18n="services.consult.badge">Recomendado</span>
+
+                        <h3 class="mt-2 text-lg font-semibold" data-i18n="services.consult.title">Consultoría & gestión
+                            tecnológica</h3>
+                        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400" data-i18n="services.consult.meta">
+                            Acompañamiento integral en proyectos digitales.
+                        </p>
+                        <p class="mt-4 text-3xl font-extrabold text-ink dark:text-white"
+                            data-i18n="services.consult.tag">
+                            Servicios
+                        </p>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                            <li data-i18n="services.consult.i1">Consultoría tecnológica</li>
+                            <li data-i18n="services.consult.i2">Gestión de proyectos</li>
+                            <li data-i18n="services.consult.i3">Arquitectura de soluciones</li>
+                        </ul>
+                        <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white"
+                            data-i18n="services.consult.cta">Cotizar</a>
+                    </div>
+
+                    <!-- Card 3 — Integración & Automatización -->
+                    <div
+                        class="fade-up rounded-2xl border border-white/10 bg-white/70 p-6 backdrop-blur dark:bg-card/60">
+                        <h3 class="text-lg font-semibold" data-i18n="services.auto.title">Integración & automatización
+                        </h3>
+                        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400" data-i18n="services.auto.meta">
+                            Conexión entre sistemas y optimización operativa.
+                        </p>
+                        <p class="mt-4 text-3xl font-extrabold text-ink dark:text-white" data-i18n="services.auto.tag">
+                            Servicios
+                        </p>
+                        <ul class="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                            <li data-i18n="services.auto.i1">Integración de APIs y servicios</li>
+                            <li data-i18n="services.auto.i2">Automatización de workflows</li>
+                            <li data-i18n="services.auto.i3">Optimización de procesos</li>
+                        </ul>
+                        <a href="#contacto" class="mt-6 inline-block rounded-xl bg-primary px-4 py-2 text-white"
+                            data-i18n="services.auto.cta">Cotizar</a>
+                    </div>
+
                 </div>
+
             </div>
+
         </section>
 
         <!-- ===== CTA ===== -->
@@ -780,10 +852,37 @@
                 'projects.p6.desc': 'Conexión entre sistemas, APIs y workflows para optimizar procesos.',
 
 
-                'pricing.title': 'Planes flexibles', 'pricing.subtitle': 'Precios orientativos. Ajustamos según alcance y tiempos.',
-                'pricing.basic.title': 'Básico', 'pricing.basic.meta': 'Landing 1 sección • 1 semana', 'pricing.basic.i1': 'Diseño moderno', 'pricing.basic.i2': 'Optimización móvil', 'pricing.basic.i3': 'Formulario de contacto', 'pricing.basic.cta': 'Quiero este',
-                'pricing.pro.badge': 'Recomendado', 'pricing.pro.title': 'Pro', 'pricing.pro.meta': 'Sitio 4–6 secciones • 2–3 semanas', 'pricing.pro.i1': 'Animaciones y SEO base', 'pricing.pro.i2': 'Integración Analytics', 'pricing.pro.i3': 'Soporte 30 días', 'pricing.pro.cta': 'Quiero este',
-                'pricing.custom.title': 'A medida', 'pricing.custom.meta': 'Web + APIs/Automation', 'pricing.custom.i1': 'Alcance flexible', 'pricing.custom.i2': 'Integraciones', 'pricing.custom.i3': 'Soporte extendido', 'pricing.custom.cta': 'Cotizar',
+                'services.title': 'Planes flexibles',
+                'services.subtitle': 'Servicios profesionales según alcance y requerimientos.',
+
+                // Desarrollo de software
+                'services.dev.title': 'Desarrollo de software',
+                'services.dev.meta': 'Sistemas web, móviles y plataformas a medida.',
+                'services.dev.tag': 'Servicios',
+                'services.dev.i1': 'Aplicaciones web y móviles',
+                'services.dev.i2': 'Plataformas empresariales',
+                'services.dev.i3': 'Desarrollo personalizado',
+                'services.dev.cta': 'Cotizar',
+
+                // Consultoría & gestión tecnológica
+                'services.consult.badge': 'Recomendado',
+                'services.consult.title': 'Consultoría & gestión tecnológica',
+                'services.consult.meta': 'Acompañamiento integral en proyectos digitales.',
+                'services.consult.tag': 'Servicios',
+                'services.consult.i1': 'Consultoría tecnológica',
+                'services.consult.i2': 'Gestión de proyectos',
+                'services.consult.i3': 'Arquitectura de soluciones',
+                'services.consult.cta': 'Cotizar',
+
+                // Integración & automatización
+                'services.auto.title': 'Integración & automatización',
+                'services.auto.meta': 'Conexión entre sistemas y optimización operativa.',
+                'services.auto.tag': 'Servicios',
+                'services.auto.i1': 'Integración de APIs y servicios',
+                'services.auto.i2': 'Automatización de workflows',
+                'services.auto.i3': 'Optimización de procesos',
+                'services.auto.cta': 'Cotizar',
+
                 'contact.title': 'Hablemos de tu proyecto', 'contact.subtitle': 'Cuéntanos qué necesitas. Respondemos dentro del mismo día hábil.', 'contact.name': 'Nombre', 'contact.email': 'Email', 'contact.company': 'Empresa (opcional)', 'contact.message': 'Mensaje', 'contact.consent': 'Acepto el uso de mis datos para contacto.', 'contact.send': 'Enviar', 'contact.direct': 'Contacto directo', 'contact.why': '¿Por qué elegirnos?', 'contact.why1': 'Transparencia y foco en valor', 'contact.why2': 'Iteraciones rápidas con demo', 'contact.why3': 'Soporte cercano post‑entrega',
                 'footer.rights': 'Todos los derechos reservados.'
             },
@@ -825,10 +924,37 @@
                 'projects.p6.title': 'Automation & integrations',
                 'projects.p6.desc': 'System connectivity, APIs and workflows to streamline operations.',
 
-                'pricing.title': 'Flexible plans', 'pricing.subtitle': 'Indicative pricing. We adapt to scope and timelines.',
-                'pricing.basic.title': 'Basic', 'pricing.basic.meta': '1‑section landing • 1 week', 'pricing.basic.i1': 'Modern design', 'pricing.basic.i2': 'Mobile optimization', 'pricing.basic.i3': 'Contact form', 'pricing.basic.cta': 'Choose this',
-                'pricing.pro.badge': 'Popular', 'pricing.pro.title': 'Pro', 'pricing.pro.meta': '4–6 section site • 2–3 weeks', 'pricing.pro.i1': 'Animations & base SEO', 'pricing.pro.i2': 'Analytics integration', 'pricing.pro.i3': '30‑day support', 'pricing.pro.cta': 'Choose this',
-                'pricing.custom.title': 'Custom', 'pricing.custom.meta': 'Web + APIs/Automation', 'pricing.custom.i1': 'Flexible scope', 'pricing.custom.i2': 'Integrations', 'pricing.custom.i3': 'Extended support', 'pricing.custom.cta': 'Get a quote',
+                'services.title': 'Flexible plans',
+                'services.subtitle': 'Professional services adapted to scope and requirements.',
+
+                // Software development
+                'services.dev.title': 'Software development',
+                'services.dev.meta': 'Web systems, mobile apps and tailored platforms.',
+                'services.dev.tag': 'Services',
+                'services.dev.i1': 'Web & mobile applications',
+                'services.dev.i2': 'Business platforms',
+                'services.dev.i3': 'Custom development',
+                'services.dev.cta': 'Request quote',
+
+                // Consulting & tech management
+                'services.consult.badge': 'Recommended',
+                'services.consult.title': 'Consulting & tech management',
+                'services.consult.meta': 'End-to-end support for digital projects.',
+                'services.consult.tag': 'Services',
+                'services.consult.i1': 'Technology consulting',
+                'services.consult.i2': 'Project management',
+                'services.consult.i3': 'Solution architecture',
+                'services.consult.cta': 'Request quote',
+
+                // Integration & automation
+                'services.auto.title': 'Integration & automation',
+                'services.auto.meta': 'System connectivity and operational optimization.',
+                'services.auto.tag': 'Services',
+                'services.auto.i1': 'API & system integrations',
+                'services.auto.i2': 'Workflow automation',
+                'services.auto.i3': 'Process optimization',
+                'services.auto.cta': 'Request quote',
+
                 'contact.title': 'Tell us about your project', 'contact.subtitle': 'Share what you need. We reply within one business day.', 'contact.name': 'Name', 'contact.email': 'Email', 'contact.company': 'Company (optional)', 'contact.message': 'Message', 'contact.consent': 'I agree to be contacted about my request.', 'contact.send': 'Send', 'contact.direct': 'Direct contact', 'contact.why': 'Why choose us?', 'contact.why1': 'Transparency & value focus', 'contact.why2': 'Fast iterations with demos', 'contact.why3': 'Close post‑delivery support',
                 'footer.rights': 'All rights reserved.'
             }
