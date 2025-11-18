@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gracias — SoAn Tech</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f4f7ff;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .timer {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+
+    <script>
+        let seconds = 5;
+        const redirectUrl = "https://soantech.cl";
+
+        function countdown() {
+            document.getElementById("timer").textContent = seconds;
+            if (seconds === 0) {
+                window.location.href = redirectUrl;
+            } else {
+                seconds--;
+                setTimeout(countdown, 1000);
+            }
+        }
+
+        window.onload = countdown;
+    </script>
+
+</head>
+
+<body>
+    <div class="card">
+        <h1>¡Gracias por contactarnos! 🚀</h1>
+        <p>Hemos recibido tu mensaje y te responderemos muy pronto.</p>
+
+        <p class="timer">Serás redirigido en <span id="timer">5</span> segundos...</p>
+
+        <a href="https://soantech.cl">Volver al sitio</a>
+    </div>
+</body>
+
+</html>
